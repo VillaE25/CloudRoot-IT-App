@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a1f3d" />
+  <meta name="description" content="CloudRoot IT Support — Submit a support request" />
+  <title>CloudRoot Support</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="CloudRoot Support" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      /* CloudRoot IT brand palette — pulled from logo */
+      --brand-primary: #0a1f3d;       /* deep navy (CloudRoot wordmark, tree) */
+      --brand-accent:  #1e88ff;       /* bright blue (cloud, "IT") */
+      --brand-accent-2:#0060d8;       /* mid blue (tagline accent) */
+      --brand-warm:    #f4a261;       /* attention amber */
+      --brand-danger:  #d64545;
+
+      --bg:            #fafaf7;
+      --surface:       #ffffff;
+      --surface-2:     #f4f3ee;
+      --ink:           #1a1f2e;
+      --ink-soft:      #4a5160;
+      --ink-faint:     #8a8f9c;
+      --border:        #e5e3dc;
+      --border-strong: #d4d1c7;
+
+      --radius-sm:  6px;
+      --radius:     10px;
+      --radius-lg:  16px;
+
+      --shadow-sm: 0 1px 2px rgba(10, 37, 64, 0.04);
+      --shadow:    0 4px 16px rgba(10, 37, 64, 0.06), 0 1px 2px rgba(10, 37, 64, 0.04);
+      --shadow-lg: 0 20px 40px rgba(10, 37, 64, 0.10), 0 4px 12px rgba(10, 37, 64, 0.06);
+
+      --font-display: 'Fraunces', 'Times New Roman', serif;
+      --font-body:    'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Subtle paper texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.4;
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(30, 136, 255, 0.04), transparent 40%),
+        radial-gradient(circle at 80% 90%, rgba(10, 37, 64, 0.04), transparent 40%);
+      z-index: 0;
+    }
+
+    /* ───────── Header ───────── */
+    header {
+      position: relative;
+      z-index: 1;
+      padding: 24px 24px 12px;
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .brand-mark svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 19px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    .brand-name-accent {
+      color: var(--brand-accent);
+      font-weight: 600;
+    }
+
+    .brand-tag {
+      font-size: 12px;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    /* ───────── Main ───────── */
+    main {
+      flex: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 16px 24px 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      padding: 24px 0 32px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(28px, 5vw, 38px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: var(--ink);
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--brand-accent);
+      font-weight: 400;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--ink-soft);
+      margin: 0;
+      max-width: 52ch;
+    }
+
+    /* ───────── Status banner ───────── */
+    .status-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--brand-accent);
+      box-shadow: 0 0 0 4px rgba(30, 136, 255, 0.15);
+      flex-shrink: 0;
+    }
+
+    .status-banner.offline .status-dot {
+      background: var(--brand-warm);
+      box-shadow: 0 0 0 4px rgba(244, 162, 97, 0.2);
+    }
+
+    /* ───────── Form ───────── */
+    form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-section {
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-section:last-of-type { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 16px;
+      height: 1px;
+      background: var(--brand-accent);
+      display: inline-block;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+    .field:last-child { margin-bottom: 0; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 540px) {
+      .field-row { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    label .req {
+      color: var(--brand-danger);
+      margin-left: 2px;
+    }
+
+    label .hint {
+      color: var(--ink-faint);
+      font-weight: 400;
+      margin-left: 6px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="datetime-local"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%234a5160' stroke-width='1.5' d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      font-family: inherit;
+      line-height: 1.5;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--brand-accent);
+      box-shadow: 0 0 0 3px rgba(30, 136, 255, 0.15);
+      background: var(--surface);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--ink-faint);
+    }
+
+    /* Priority radio group */
+    .priority-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 480px) {
+      .priority-group { grid-template-columns: 1fr; }
+    }
+    .priority-option {
+      position: relative;
+    }
+    .priority-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .priority-option label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 12px 14px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: var(--bg);
+      margin: 0;
+    }
+    .priority-option label:hover {
+      border-color: var(--ink-soft);
+    }
+    .priority-option input:checked + label {
+      border-color: var(--brand-primary);
+      background: var(--surface);
+      box-shadow: 0 0 0 1px var(--brand-primary), var(--shadow-sm);
+    }
+    .priority-option .p-title {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .priority-option .p-desc {
+      font-size: 12px;
+      color: var(--ink-faint);
+    }
+    .priority-option[data-level="high"] input:checked + label {
+      border-color: var(--brand-danger);
+      box-shadow: 0 0 0 1px var(--brand-danger), var(--shadow-sm);
+    }
+    .priority-option[data-level="high"] input:checked + label .p-title { color: var(--brand-danger); }
+
+    /* File upload */
+    .file-upload {
+      border: 1.5px dashed var(--border-strong);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .file-upload:hover {
+      border-color: var(--brand-accent);
+      background: var(--surface);
+    }
+    .file-upload.dragover {
+      border-color: var(--brand-accent);
+      background: rgba(30, 136, 255, 0.04);
+    }
+    .file-upload input { display: none; }
+    .file-upload-icon {
+      width: 32px;
+      height: 32px;
+      margin: 0 auto 8px;
+      color: var(--ink-faint);
+    }
+    .file-upload-text {
+      font-size: 14px;
+      color: var(--ink-soft);
+    }
+    .file-upload-text strong {
+      color: var(--brand-accent);
+      font-weight: 600;
+    }
+    .file-upload-hint {
+      font-size: 12px;
+      color: var(--ink-faint);
+      margin-top: 4px;
+    }
+
+    .file-list {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--surface-2);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+    }
+    .file-item-name {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-item-size {
+      color: var(--ink-faint);
+      font-size: 12px;
+    }
+    .file-item-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-faint);
+      font-size: 16px;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .file-item-remove:hover { color: var(--brand-danger); background: rgba(214, 69, 69, 0.08); }
+
+    /* ───────── Submit ───────── */
+    .submit-row {
+      margin-top: 28px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    button.primary {
+      flex: 1;
+      min-width: 180px;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: white;
+      background: var(--brand-primary);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    button.primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+      background: #0d3056;
+    }
+    button.primary:active:not(:disabled) { transform: translateY(0); }
+    button.primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .submit-note {
+      font-size: 12px;
+      color: var(--ink-faint);
+      flex-basis: 100%;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* ───────── Success state ───────── */
+    .success-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px 28px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      animation: fadeUp 0.4s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: rgba(30, 136, 255, 0.12);
+      display: grid;
+      place-items: center;
+      color: var(--brand-accent);
+    }
+    .success-card h2 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 26px;
+      letter-spacing: -0.01em;
+      margin: 0 0 8px;
+    }
+    .success-card p {
+      color: var(--ink-soft);
+      margin: 0 0 24px;
+    }
+    .ticket-ref {
+      display: inline-block;
+      padding: 8px 14px;
+      background: var(--surface-2);
+      border-radius: var(--radius-sm);
+      font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .success-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-secondary {
+      padding: 10px 18px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-secondary:hover { background: var(--surface-2); }
+
+    /* ───────── Footer ───────── */
+    footer {
+      padding: 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--ink-faint);
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    footer a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--border-strong);
+    }
+    footer a:hover { color: var(--brand-primary); }
+
+    /* ───────── Install prompt ───────── */
+    .install-prompt {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--brand-primary);
+      color: white;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      display: none;
+      align-items: center;
+      gap: 12px;
+      z-index: 10;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .install-prompt.show { display: flex; }
+    .install-prompt-text {
+      flex: 1;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+    .install-prompt button {
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      background: white;
+      color: var(--brand-primary);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .install-prompt .close-btn {
+      background: transparent;
+      color: white;
+      padding: 4px 8px;
+      opacity: 0.7;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Validation error */
+    .field-error {
+      font-size: 12px;
+      color: var(--brand-danger);
+      margin-top: 4px;
+    }
+    input.error, select.error, textarea.error {
+      border-color: var(--brand-danger);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cloud outline (bright blue) -->
+          <path d="M12 28
+                   c0-5 4-9 9-9
+                   c1-4 5-7 9-7
+                   c5 0 9 4 10 8
+                   c4 0 8 3 8 8
+                   c0 5-4 8-8 8
+                   l-26 0
+                   c-4 0-7-3-7-8z"
+                fill="none" stroke="#1e88ff" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- Tree trunk -->
+          <line x1="32" y1="36" x2="32" y2="52" stroke="#0a1f3d" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- Roots -->
+          <path d="M32 52 c-2.5 0.5-5 1.5-7 3
+                   M32 52 c2.5 0.5 5 1.5 7 3
+                   M32 49 c-2 0.5-3.5 1-5 2
+                   M32 49 c2 0.5 3.5 1 5 2"
+                stroke="#0a1f3d" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          <!-- Branches into cloud -->
+          <path d="M32 36 L32 22
+                   M32 28 L24 24
+                   M32 28 L40 24
+                   M32 24 L26 19
+                   M32 24 L38 19"
+                stroke="#0a1f3d" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <!-- Circuit nodes -->
+          <circle cx="24" cy="24" r="2.2" fill="#0a1f3d"/>
+          <circle cx="40" cy="24" r="2.2" fill="#0a1f3d"/>
+          <circle cx="26" cy="19" r="2" fill="#0a1f3d"/>
+          <circle cx="38" cy="19" r="2" fill="#0a1f3d"/>
+          <circle cx="32" cy="20" r="2.2" fill="#0a1f3d"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">CloudRoot <span class="brand-name-accent">IT</span></div>
+        <div class="brand-tag">Support Portal</div>
+      </div>
+    </div>
+  </header>
+
+  <main id="app">
+    <div class="hero">
+      <h1>How can we <em>help</em> today?</h1>
+      <p>Submit a support request and we'll get back to you quickly. Include as much detail as you can — it helps us solve the issue faster.</p>
+    </div>
+
+    <div class="status-banner" id="status-banner">
+      <div class="status-dot"></div>
+      <span id="status-text">Support team online — typical response under 2 hours</span>
+    </div>
+
+    <form id="ticket-form" novalidate>
+      <!-- Contact Info -->
+      <div class="form-section">
+        <div class="section-label">Your information</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="name">Full name <span class="req">*</span></label>
+            <input type="text" id="name" name="name" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="company">Company / organization <span class="req">*</span></label>
+            <input type="text" id="company" name="company" required autocomplete="organization" />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="hint">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Issue Details -->
+      <div class="form-section">
+        <div class="section-label">The issue</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="category">Category <span class="req">*</span></label>
+            <select id="category" name="category" required>
+              <option value="">Select one…</option>
+              <option value="email">Email / Outlook</option>
+              <option value="network">Internet / Network / Wi-Fi</option>
+              <option value="hardware">Hardware (computer, printer, phone)</option>
+              <option value="software">Software / Application</option>
+              <option value="account">Account / Password</option>
+              <option value="security">Security concern</option>
+              <option value="onboard">New user / onboarding</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="device">Affected device <span class="hint">(optional)</span></label>
+            <input type="text" id="device" name="device" placeholder="e.g. Dell laptop, iPhone, office printer" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Priority <span class="req">*</span></label>
+          <div class="priority-group">
+            <div class="priority-option" data-level="low">
+              <input type="radio" id="prio-low" name="priority" value="low" />
+              <label for="prio-low">
+                <span class="p-title">Low</span>
+                <span class="p-desc">Annoying but I can work</span>
+              </label>
+            </div>
+            <div class="priority-option" data-level="medium">
+              <input type="radio" id="prio-medium" name="priority" value="medium" checked />
+              <label for="prio-medium">
+                <span class="p-title">Medium</span>
+                <span class="p-desc">Affecting productivity</span>
+              </label>
+            </div>
+            <div class="priority-option" data-level="high">
+              <input type="radio" id="prio-high" name="priority" value="high" />
+              <label for="prio-high">
+                <span class="p-title">Urgent</span>
+                <span class="p-desc">Cannot work at all</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="description">Describe the issue <span class="req">*</span></label>
+          <textarea id="description" name="description" required placeholder="What's happening? When did it start? Any error messages? What have you already tried?"></textarea>
+        </div>
+
+        <div class="field">
+          <label>Screenshots or photos <span class="hint">(optional, up to 5 files)</span></label>
+          <div class="file-upload" id="file-drop">
+            <svg class="file-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <div class="file-upload-text"><strong>Click to upload</strong> or drag & drop</div>
+            <div class="file-upload-hint">PNG, JPG, PDF — up to 10 MB each</div>
+            <input type="file" id="files" name="files" multiple accept="image/*,application/pdf" />
+          </div>
+          <div class="file-list" id="file-list"></div>
+        </div>
+      </div>
+
+      <!-- Contact preferences -->
+      <div class="form-section">
+        <div class="section-label">Contact preferences</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="contact-method">Preferred method</label>
+            <select id="contact-method" name="contactMethod">
+              <option value="email">Email</option>
+              <option value="phone">Phone call</option>
+              <option value="either">Either is fine</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="contact-time">Best time to reach you <span class="hint">(optional)</span></label>
+            <input type="text" id="contact-time" name="contactTime" placeholder="e.g. mornings, after 2pm, anytime" />
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="primary" id="submit-btn">
+          <span id="submit-label">Submit request</span>
+        </button>
+        <div class="submit-note">We'll confirm receipt by email within minutes.</div>
+      </div>
+    </form>
+  </main>
+
+  <footer>
+    <div style="font-family: var(--font-display); font-style: italic; color: var(--ink-soft); margin-bottom: 6px;">Solutions that grow with you.</div>
+    CloudRoot IT · <a href="mailto:Support@cloudroot-it.com">Support@cloudroot-it.com</a>
+  </footer>
+
+  <div class="install-prompt" id="install-prompt">
+    <div class="install-prompt-text">Install CloudRoot Support for quick access</div>
+    <button id="install-btn">Install</button>
+    <button class="close-btn" id="install-close">✕</button>
+  </div>
+
+  <script>
+    // ─────── CONFIG ───────
+    const SUPPORT_EMAIL = 'Support@cloudroot-it.com';
+
+    // ─────── PWA INSTALL ───────
+    let deferredPrompt;
+    const installPrompt = document.getElementById('install-prompt');
+    const installBtn = document.getElementById('install-btn');
+    const installClose = document.getElementById('install-close');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!localStorage.getItem('install-dismissed')) {
+        setTimeout(() => installPrompt.classList.add('show'), 3000);
+      }
+    });
+
+    installBtn?.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installPrompt.classList.remove('show');
+    });
+
+    installClose?.addEventListener('click', () => {
+      installPrompt.classList.remove('show');
+      localStorage.setItem('install-dismissed', '1');
+    });
+
+    // ─────── SERVICE WORKER ───────
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+
+    // ─────── ONLINE / OFFLINE ───────
+    const statusBanner = document.getElementById('status-banner');
+    const statusText = document.getElementById('status-text');
+
+    function updateOnlineStatus() {
+      if (navigator.onLine) {
+        statusBanner.classList.remove('offline');
+        statusText.textContent = 'Support team online — typical response under 2 hours';
+      } else {
+        statusBanner.classList.add('offline');
+        statusText.textContent = 'Offline — your request will be saved and sent when you reconnect';
+      }
+    }
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    updateOnlineStatus();
+
+    // ─────── FILE UPLOAD ───────
+    const fileInput = document.getElementById('files');
+    const fileDrop = document.getElementById('file-drop');
+    const fileList = document.getElementById('file-list');
+    let attachedFiles = [];
+    const MAX_FILES = 5;
+    const MAX_SIZE = 10 * 1024 * 1024;
+
+    fileDrop.addEventListener('click', () => fileInput.click());
+    fileDrop.addEventListener('dragover', (e) => { e.preventDefault(); fileDrop.classList.add('dragover'); });
+    fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('dragover'));
+    fileDrop.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileDrop.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    function handleFiles(files) {
+      for (const file of files) {
+        if (attachedFiles.length >= MAX_FILES) {
+          alert(`Maximum ${MAX_FILES} files`);
+          break;
+        }
+        if (file.size > MAX_SIZE) {
+          alert(`"${file.name}" is larger than 10 MB`);
+          continue;
+        }
+        attachedFiles.push(file);
+      }
+      renderFileList();
+    }
+
+    function renderFileList() {
+      fileList.innerHTML = '';
+      attachedFiles.forEach((file, i) => {
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        div.innerHTML = `
+          <span class="file-item-name">${escapeHtml(file.name)}</span>
+          <span class="file-item-size">${formatSize(file.size)}</span>
+          <button type="button" class="file-item-remove" data-i="${i}" aria-label="Remove">✕</button>
+        `;
+        fileList.appendChild(div);
+      });
+      fileList.querySelectorAll('.file-item-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+          attachedFiles.splice(parseInt(btn.dataset.i), 1);
+          renderFileList();
+        });
+      });
+    }
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+      return (bytes/(1024*1024)).toFixed(1) + ' MB';
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    // ─────── FORM SUBMIT ───────
+    const form = document.getElementById('ticket-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const submitLabel = document.getElementById('submit-label');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      submitBtn.disabled = true;
+      submitLabel.innerHTML = '<span class="spinner"></span> Preparing…';
+
+      const data = collectFormData();
+      const ticketRef = generateTicketRef();
+      data.ticketRef = ticketRef;
+      data.submittedAt = new Date().toISOString();
+
+      // Cache locally regardless of online state
+      saveDraft(data);
+
+      if (navigator.onLine) {
+        try {
+          await submitTicket(data);
+          showSuccess(ticketRef, false);
+        } catch (err) {
+          // Fall back to mailto
+          openMailto(data);
+          showSuccess(ticketRef, false);
+        }
+      } else {
+        queueOffline(data);
+        showSuccess(ticketRef, true);
+      }
+    });
+
+    function validateForm() {
+      let valid = true;
+      const required = ['name', 'company', 'email', 'category', 'description'];
+      required.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+          el.classList.add('error');
+          valid = false;
+        } else {
+          el.classList.remove('error');
+        }
+      });
+      const emailEl = document.getElementById('email');
+      if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+        emailEl.classList.add('error');
+        valid = false;
+      }
+      if (!valid) {
+        const firstErr = form.querySelector('.error');
+        firstErr?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return valid;
+    }
+
+    function collectFormData() {
+      const fd = new FormData(form);
+      return {
+        name: fd.get('name'),
+        company: fd.get('company'),
+        email: fd.get('email'),
+        phone: fd.get('phone'),
+        category: fd.get('category'),
+        device: fd.get('device'),
+        priority: fd.get('priority'),
+        description: fd.get('description'),
+        contactMethod: fd.get('contactMethod'),
+        contactTime: fd.get('contactTime'),
+        fileCount: attachedFiles.length,
+        fileNames: attachedFiles.map(f => f.name),
+      };
+    }
+
+    function generateTicketRef() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth()+1).padStart(2,'0');
+      const d = String(now.getDate()).padStart(2,'0');
+      const r = Math.random().toString(36).substring(2, 6).toUpperCase();
+      return `CR-${y}${m}${d}-${r}`;
+    }
+
+    function buildEmailBody(data) {
+      const priorityLabel = { low: 'Low', medium: 'Medium', high: 'URGENT' }[data.priority] || data.priority;
+      return [
+        `Ticket Reference: ${data.ticketRef}`,
+        `Submitted: ${new Date(data.submittedAt).toLocaleString()}`,
+        ``,
+        `─── Contact ───`,
+        `Name:    ${data.name}`,
+        `Company: ${data.company}`,
+        `Email:   ${data.email}`,
+        `Phone:   ${data.phone || '(not provided)'}`,
+        ``,
+        `─── Issue ───`,
+        `Category: ${data.category}`,
+        `Device:   ${data.device || '(not specified)'}`,
+        `Priority: ${priorityLabel}`,
+        ``,
+        `Description:`,
+        data.description,
+        ``,
+        `─── Contact preferences ───`,
+        `Method:    ${data.contactMethod}`,
+        `Best time: ${data.contactTime || '(any)'}`,
+        ``,
+        data.fileCount > 0 ? `Attachments (${data.fileCount}): ${data.fileNames.join(', ')}\n[Files attached separately]` : 'No attachments.',
+      ].join('\n');
+    }
+
+    async function submitTicket(data) {
+      // Production: replace with POST to your backend / Power Automate / Logic App
+      // For now, we open a mailto with the structured body. Files are referenced
+      // by name; the user can drag them into the email if needed.
+      openMailto(data);
+      return true;
+    }
+
+    function openMailto(data) {
+      const subject = `[${data.priority?.toUpperCase() || 'NEW'}] ${data.category} — ${data.company} — ${data.ticketRef}`;
+      const body = buildEmailBody(data);
+      const url = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      // Use a hidden anchor so PWA/in-app browsers handle it correctly
+      const a = document.createElement('a');
+      a.href = url;
+      a.click();
+    }
+
+    function saveDraft(data) {
+      try {
+        const drafts = JSON.parse(localStorage.getItem('cr-tickets') || '[]');
+        drafts.push(data);
+        localStorage.setItem('cr-tickets', JSON.stringify(drafts.slice(-20)));
+      } catch {}
+    }
+
+    function queueOffline(data) {
+      try {
+        const queue = JSON.parse(localStorage.getItem('cr-queue') || '[]');
+        queue.push(data);
+        localStorage.setItem('cr-queue', JSON.stringify(queue));
+      } catch {}
+    }
+
+    function showSuccess(ticketRef, offline) {
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <div class="success-card">
+          <div class="success-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <h2>${offline ? 'Saved — we\'ll send it when you\'re back online' : 'Request submitted'}</h2>
+          <p>${offline
+            ? 'Your support request is queued locally. It will be sent automatically when your connection returns.'
+            : 'Your email client should have opened with the ticket details. Send it to complete your request — we\'ll reply by email.'}</p>
+          <div class="ticket-ref">${ticketRef}</div>
+          <div class="success-actions">
+            <a href="#" class="btn-secondary" onclick="location.reload(); return false;">Submit another request</a>
+            <a href="mailto:${SUPPORT_EMAIL}" class="btn-secondary">Email us directly</a>
+          </div>
+        </div>
+      `;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Process queued offline tickets when we come back online
+    window.addEventListener('online', () => {
+      const queue = JSON.parse(localStorage.getItem('cr-queue') || '[]');
+      if (queue.length > 0) {
+        queue.forEach(t => openMailto(t));
+        localStorage.removeItem('cr-queue');
+      }
+    });
+  </script>
+</body>
+</html>
