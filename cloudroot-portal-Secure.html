@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CloudRoot IT — Tech Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy: #0a1f3d;
+  --navy-2: #0d2748;
+  --blue: #1e88ff;
+  --blue-dim: rgba(30,136,255,0.12);
+  --blue-glow: rgba(30,136,255,0.25);
+  --cream: #f7f6f1;
+  --ink: #0a1f3d;
+  --ink-2: #3a4a60;
+  --ink-3: #7a8a9a;
+  --border: rgba(10,31,61,0.10);
+  --border-strong: rgba(10,31,61,0.18);
+  --surface: #ffffff;
+  --surface-2: #f4f3ee;
+  --red: #e03e3e;
+  --amber: #f59e0b;
+  --green: #10b981;
+  --sidebar-w: 220px;
+  --radius: 10px;
+  --radius-lg: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--navy);
+  min-height: 100vh;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  padding: 0 0 24px;
+}
+
+.sidebar-brand {
+  padding: 20px 18px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-brand img {
+  height: 32px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+.brand-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.brand-text span { color: var(--blue); }
+.brand-sub { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1px; }
+
+.nav-section {
+  padding: 16px 12px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  color: rgba(255,255,255,0.55);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 13.5px;
+  font-weight: 400;
+  border-left: 2px solid transparent;
+  margin: 1px 0;
+}
+
+.nav-item:hover { color: white; background: rgba(255,255,255,0.05); }
+.nav-item.active { color: white; background: rgba(30,136,255,0.15); border-left-color: var(--blue); font-weight: 500; }
+.nav-icon { font-size: 16px; flex-shrink: 0; opacity: 0.8; }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px 18px 0;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.sidebar-footer .user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.user-name { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 500; }
+.user-role { font-size: 11px; color: rgba(255,255,255,0.35); }
+
+/* ── Main ── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+
+.btn-primary {
+  background: var(--navy);
+  color: white;
+}
+.btn-primary:hover { background: var(--navy-2); transform: translateY(-1px); }
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+}
+.btn-secondary:hover { background: var(--surface-2); }
+
+.btn-blue {
+  background: var(--blue);
+  color: white;
+}
+.btn-blue:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn-danger {
+  background: var(--red);
+  color: white;
+}
+
+/* ── Content area ── */
+.content {
+  padding: 24px 28px;
+  flex: 1;
+}
+
+/* ── Views ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── Dashboard ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--blue);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.stat-card:hover::before { opacity: 1; }
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-sub { font-size: 12px; color: var(--ink-3); }
+.stat-urgent { color: var(--red); }
+.stat-good { color: var(--green); }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+}
+
+/* ── Cards / Panels ── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+
+/* ── Table ── */
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+  white-space: nowrap;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--ink);
+  vertical-align: middle;
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafaf7; }
+tr { cursor: pointer; }
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-new { background: var(--blue-dim); color: var(--blue); }
+.badge-progress { background: rgba(245,158,11,0.12); color: #b45309; }
+.badge-waiting { background: rgba(139,92,246,0.1); color: #7c3aed; }
+.badge-resolved { background: rgba(16,185,129,0.1); color: #059669; }
+.badge-closed { background: rgba(107,114,128,0.1); color: #4b5563; }
+.badge-urgent { background: rgba(224,62,62,0.1); color: var(--red); }
+.badge-medium { background: rgba(245,158,11,0.1); color: #b45309; }
+.badge-low { background: rgba(107,114,128,0.08); color: #6b7280; }
+.badge-paid { background: rgba(16,185,129,0.1); color: #059669; }
+.badge-sent { background: var(--blue-dim); color: var(--blue); }
+.badge-draft { background: rgba(107,114,128,0.08); color: #6b7280; }
+.badge-overdue { background: rgba(224,62,62,0.1); color: var(--red); }
+.badge-active { background: rgba(16,185,129,0.1); color: #059669; }
+.badge-expired { background: rgba(224,62,62,0.1); color: var(--red); }
+.badge-pending { background: rgba(245,158,11,0.12); color: #b45309; }
+
+/* ── Loading ── */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  color: var(--ink-3);
+  gap: 10px;
+  font-size: 13px;
+}
+
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--ink-3);
+}
+
+.empty-icon { font-size: 32px; margin-bottom: 12px; }
+.empty-text { font-size: 14px; margin-bottom: 4px; }
+.empty-sub { font-size: 12px; }
+
+/* ── Modal ── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,31,61,0.5);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.modal-backdrop.open { display: flex; }
+
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(10,31,61,0.2);
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--ink-3);
+  padding: 4px;
+  line-height: 1;
+}
+
+.modal-body { padding: 20px 24px; }
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* ── Form ── */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-full { grid-column: 1 / -1; }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+label { font-size: 12px; font-weight: 500; color: var(--ink-2); }
+
+input, select, textarea {
+  padding: 9px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--surface-2);
+  transition: all 0.15s;
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: white;
+  box-shadow: 0 0 0 3px var(--blue-dim);
+}
+
+textarea { resize: vertical; min-height: 80px; }
+
+select {
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='none' stroke='%234a5160' stroke-width='1.5' d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+/* ── Timer ── */
+.timer-card {
+  background: var(--navy);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.timer-display {
+  font-family: 'DM Mono', monospace;
+  font-size: 40px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: white;
+  margin: 12px 0;
+}
+
+.timer-label { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; }
+.timer-ticket { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+.timer-actions { display: flex; gap: 8px; margin-top: 16px; }
+
+.btn-timer-start { background: var(--green); color: white; }
+.btn-timer-stop { background: var(--red); color: white; }
+.btn-timer-pause { background: rgba(255,255,255,0.15); color: white; }
+
+/* ── Ticket detail ── */
+.ticket-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+}
+
+.detail-section { margin-bottom: 20px; }
+.detail-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+.detail-value { font-size: 14px; color: var(--ink); }
+
+.meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.meta-item {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+/* ── Quick actions panel ── */
+.quick-list { padding: 8px 0; }
+.quick-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.quick-item:last-child { border-bottom: none; }
+.quick-item:hover { background: var(--surface-2); }
+.quick-item-icon { font-size: 20px; }
+.quick-item-label { font-size: 13px; font-weight: 500; color: var(--ink); }
+.quick-item-sub { font-size: 11px; color: var(--ink-3); }
+
+/* ── Toast ── */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  background: var(--navy);
+  color: white;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(10,31,61,0.2);
+  animation: toastIn 0.3s ease;
+  min-width: 260px;
+}
+
+.toast.success { background: #065f46; }
+.toast.error { background: #7f1d1d; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .ticket-detail-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Search bar ── */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.search-input-wrap {
+  position: relative;
+  flex: 1;
+}
+
+.search-input-wrap input {
+  padding-left: 36px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-3);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* ── Auth screen ── */
+.auth-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.auth-logo { text-align: center; }
+.auth-logo img { height: 64px; filter: brightness(0) invert(1); opacity: 0.9; }
+.auth-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: white;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+.auth-title span { color: var(--blue); }
+
+.auth-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  width: 340px;
+  text-align: center;
+}
+
+.auth-note { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; margin-bottom: 20px; }
+.auth-url { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 16px; }
+
+/* ── Connection status ── */
+.conn-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.2);
+  display: inline-block;
+  margin-right: 6px;
+}
+.conn-dot.offline { background: var(--red); box-shadow: 0 0 0 3px rgba(224,62,62,0.2); }
+
+.section-divider {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div style="width:36px;height:36px;flex-shrink:0;">
+      <img src="https://villae25.github.io/CloudRoot-IT-App/logo-header.png" alt="CloudRoot IT" style="width:100%;height:100%;object-fit:contain;filter:brightness(0) invert(1);"/>
+    </div>
+    <div>
+      <div class="brand-text">CloudRoot <span>IT</span></div>
+      <div class="brand-sub">Tech Portal</div>
+    </div>
+  </div>
+
+  <div class="nav-section">Main</div>
+  <div class="nav-item active" onclick="showView('dashboard')">
+    <span class="nav-icon">⊞</span> Dashboard
+  </div>
+  <div class="nav-item" onclick="showView('tickets')">
+    <span class="nav-icon">🎫</span> Tickets
+  </div>
+  <div class="nav-item" onclick="showView('clients')">
+    <span class="nav-icon">🏢</span> Clients
+  </div>
+
+  <div class="nav-section">Billing</div>
+  <div class="nav-item" onclick="showView('time')">
+    <span class="nav-icon">⏱</span> Time Entries
+  </div>
+  <div class="nav-item" onclick="showView('invoices')">
+    <span class="nav-icon">📄</span> Invoices
+  </div>
+  <div class="nav-item" onclick="showView('contracts')">
+    <span class="nav-icon">📋</span> Contracts
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="user">
+      <div class="user-avatar">E</div>
+      <div>
+        <div class="user-name">Eliza</div>
+        <div class="user-role"><span class="conn-dot" id="conn-dot"></span><span id="conn-status">Connected</span></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="page-title" id="page-title">Dashboard</div>
+    <div class="topbar-actions" id="topbar-actions">
+      <button class="btn btn-blue" onclick="openNewTicket()">+ New Ticket</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Dashboard -->
+    <div class="view active" id="view-dashboard">
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Open Tickets</div>
+          <div class="stat-value" id="stat-open">—</div>
+          <div class="stat-sub">Active right now</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Urgent</div>
+          <div class="stat-value stat-urgent" id="stat-urgent">—</div>
+          <div class="stat-sub">Need immediate attention</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Clients</div>
+          <div class="stat-value" id="stat-clients">—</div>
+          <div class="stat-sub">Active accounts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Hours This Month</div>
+          <div class="stat-value" id="stat-hours">—</div>
+          <div class="stat-sub">Logged time entries</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Recent Tickets</span>
+            <button class="btn btn-secondary" style="font-size:12px;padding:5px 10px;" onclick="showView('tickets')">View all</button>
+          </div>
+          <div id="dashboard-tickets">
+            <div class="loading"><div class="spinner"></div> Loading tickets…</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="timer-card">
+            <div class="timer-label">Active Timer</div>
+            <div class="timer-display" id="timer-display">00:00:00</div>
+            <div class="timer-ticket" id="timer-ticket-label">No ticket selected</div>
+            <div class="timer-actions">
+              <button class="btn btn-timer-start" id="timer-start-btn" onclick="startTimer()">▶ Start</button>
+              <button class="btn btn-timer-stop" id="timer-stop-btn" onclick="stopTimer()" style="display:none">■ Stop & Log</button>
+              <button class="btn btn-timer-pause" id="timer-pause-btn" onclick="pauseTimer()" style="display:none">⏸</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Quick Actions</span></div>
+            <div class="quick-list">
+              <div class="quick-item" onclick="openNewTicket()">
+                <div class="quick-item-icon">🎫</div>
+                <div>
+                  <div class="quick-item-label">New Ticket</div>
+                  <div class="quick-item-sub">Create manually</div>
+                </div>
+              </div>
+              <div class="quick-item" onclick="openNewClient()">
+                <div class="quick-item-icon">🏢</div>
+                <div>
+                  <div class="quick-item-label">Add Client</div>
+                  <div class="quick-item-sub">New company</div>
+                </div>
+              </div>
+              <div class="quick-item" onclick="openNewTimeEntry()">
+                <div class="quick-item-icon">⏱</div>
+                <div>
+                  <div class="quick-item-label">Log Time</div>
+                  <div class="quick-item-sub">Manual entry</div>
+                </div>
+              </div>
+              <div class="quick-item" onclick="openNewInvoice()">
+                <div class="quick-item-icon">📄</div>
+                <div>
+                  <div class="quick-item-label">New Invoice</div>
+                  <div class="quick-item-sub">Bill a client</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tickets -->
+    <div class="view" id="view-tickets">
+      <div class="search-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Search tickets…" oninput="filterTickets(this.value)" id="ticket-search"/>
+        </div>
+        <select onchange="filterTicketStatus(this.value)" style="width:auto;">
+          <option value="">All Status</option>
+          <option value="New">New</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Waiting on Client">Waiting on Client</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+        </select>
+        <select onchange="filterTicketPriority(this.value)" style="width:auto;">
+          <option value="">All Priority</option>
+          <option value="Urgent">Urgent</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+      <div class="panel">
+        <div id="tickets-table">
+          <div class="loading"><div class="spinner"></div> Loading tickets…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clients -->
+    <div class="view" id="view-clients">
+      <div class="search-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Search clients…" oninput="filterClients(this.value)"/>
+        </div>
+      </div>
+      <div class="panel">
+        <div id="clients-table">
+          <div class="loading"><div class="spinner"></div> Loading clients…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Time Entries -->
+    <div class="view" id="view-time">
+      <div class="panel">
+        <div id="time-table">
+          <div class="loading"><div class="spinner"></div> Loading time entries…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invoices -->
+    <div class="view" id="view-invoices">
+      <div class="panel">
+        <div id="invoices-table">
+          <div class="loading"><div class="spinner"></div> Loading invoices…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contracts -->
+    <div class="view" id="view-contracts">
+      <div class="panel">
+        <div id="contracts-table">
+          <div class="loading"><div class="spinner"></div> Loading contracts…</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modals -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
+
+  <!-- New/Edit Ticket -->
+  <div class="modal" id="modal-ticket">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-ticket-title">New Ticket</span>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field form-full">
+          <label>Ticket Reference</label>
+          <input id="f-ticketref" placeholder="Auto-generated (e.g. CR-20260519-XXXX)"/>
+        </div>
+        <div class="field">
+          <label>Client Name *</label>
+          <input id="f-clientname" placeholder="Company name"/>
+        </div>
+        <div class="field">
+          <label>Contact Email</label>
+          <input id="f-email" type="email" placeholder="client@company.com"/>
+        </div>
+        <div class="field">
+          <label>Contact Phone</label>
+          <input id="f-phone" placeholder="(806) 555-0100"/>
+        </div>
+        <div class="field">
+          <label>Device</label>
+          <input id="f-device" placeholder="e.g. Dell laptop, iPhone"/>
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <select id="f-category">
+            <option value="">Select…</option>
+            <option>Email</option><option>Network</option><option>Hardware</option>
+            <option>Software</option><option>Account</option><option>Security</option>
+            <option>Onboarding</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Priority</label>
+          <select id="f-priority">
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+            <option value="Urgent">Urgent</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="f-status">
+            <option value="New">New</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Waiting on Client">Waiting on Client</option>
+            <option value="Resolved">Resolved</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+        <div class="field form-full">
+          <label>Description *</label>
+          <textarea id="f-description" rows="3" placeholder="What's the issue?"></textarea>
+        </div>
+        <div class="field form-full">
+          <label>Resolution</label>
+          <textarea id="f-resolution" rows="2" placeholder="How was it resolved?"></textarea>
+        </div>
+        <div class="field">
+          <label>Hours Spent</label>
+          <input id="f-hours" type="number" step="0.25" placeholder="0.0"/>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTicket()" id="save-ticket-btn">Save Ticket</button>
+    </div>
+  </div>
+
+  <!-- New Client -->
+  <div class="modal" id="modal-client" style="display:none">
+    <div class="modal-header">
+      <span class="modal-title">New Client</span>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field form-full">
+          <label>Company Name *</label>
+          <input id="fc-company" placeholder="Acme Corp"/>
+        </div>
+        <div class="field">
+          <label>Contact Name</label>
+          <input id="fc-contact" placeholder="Jane Smith"/>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input id="fc-email" type="email"/>
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input id="fc-phone"/>
+        </div>
+        <div class="field">
+          <label>Hourly Rate ($)</label>
+          <input id="fc-rate" type="number" step="5" placeholder="125"/>
+        </div>
+        <div class="field form-full">
+          <label>Address</label>
+          <textarea id="fc-address" rows="2"></textarea>
+        </div>
+        <div class="field form-full">
+          <label>Notes</label>
+          <textarea id="fc-notes" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveClient()">Save Client</button>
+    </div>
+  </div>
+
+  <!-- New Time Entry -->
+  <div class="modal" id="modal-time" style="display:none">
+    <div class="modal-header">
+      <span class="modal-title">Log Time</span>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field">
+          <label>Ticket Ref</label>
+          <input id="ft-ticketref" placeholder="CR-YYYYMMDD-XXXX"/>
+        </div>
+        <div class="field">
+          <label>Client Name</label>
+          <input id="ft-client" placeholder="Company name"/>
+        </div>
+        <div class="field">
+          <label>Work Date</label>
+          <input id="ft-date" type="date"/>
+        </div>
+        <div class="field">
+          <label>Hours Spent</label>
+          <input id="ft-hours" type="number" step="0.25" placeholder="1.0"/>
+        </div>
+        <div class="field">
+          <label>Hourly Rate ($)</label>
+          <input id="ft-rate" type="number" step="5" placeholder="125"/>
+        </div>
+        <div class="field">
+          <label>Billable</label>
+          <select id="ft-billable">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div class="field form-full">
+          <label>Description</label>
+          <textarea id="ft-desc" rows="2" placeholder="What did you work on?"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTimeEntry()">Log Time</button>
+    </div>
+  </div>
+
+  <!-- New Invoice -->
+  <div class="modal" id="modal-invoice" style="display:none">
+    <div class="modal-header">
+      <span class="modal-title">New Invoice</span>
+      <button class="modal-close" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field">
+          <label>Invoice Number</label>
+          <input id="fi-num" placeholder="INV-001"/>
+        </div>
+        <div class="field">
+          <label>Client Name *</label>
+          <input id="fi-client"/>
+        </div>
+        <div class="field">
+          <label>Invoice Date</label>
+          <input id="fi-date" type="date"/>
+        </div>
+        <div class="field">
+          <label>Due Date</label>
+          <input id="fi-due" type="date"/>
+        </div>
+        <div class="field">
+          <label>Total Amount ($)</label>
+          <input id="fi-amount" type="number" step="0.01"/>
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="fi-status">
+            <option>Draft</option><option>Sent</option><option>Paid</option><option>Overdue</option>
+          </select>
+        </div>
+        <div class="field form-full">
+          <label>Notes</label>
+          <textarea id="fi-notes" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveInvoice()">Save Invoice</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toasts"></div>
+
+<script>
+// ─────────────────────────────────────────
+// CONFIG — SharePoint connection
+// ─────────────────────────────────────────
+const SP = {
+  site: 'https://villarrealcorp.sharepoint.com/sites/CloudRootHelpdesk',
+  lists: {
+    tickets:     '3df2b3c9-3b86-4d52-a9c6-81d3f2e997aa',
+    clients:     'c7e97f13-139a-4ef0-ad4c-214043d2cfe7',
+    timeEntries: 'f02e703d-3f2c-4d40-891a-ab38affd243b',
+    invoices:    '28de556e-1fe0-4dbd-9427-a9c8d8fb4e40',
+    contracts:   '3b55ea57-10b4-4dd8-aadd-24f0aac5edbe',
+  }
+};
+
+// ─────────────────────────────────────────
+// SP API helpers
+// ─────────────────────────────────────────
+async function spGet(listId, query = '') {
+  const url = `${SP.site}/_api/web/lists(guid'${listId}')/items${query}`;
+  const res = await fetch(url, {
+    headers: { 'Accept': 'application/json;odata=verbose' },
+    credentials: 'include'
+  });
+  if (!res.ok) throw new Error(`SP GET failed: ${res.status}`);
+  const data = await res.json();
+  return data.d.results;
+}
+
+async function spPost(listId, body) {
+  // Get digest token first
+  const digestRes = await fetch(`${SP.site}/_api/contextinfo`, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json;odata=verbose' },
+    credentials: 'include'
+  });
+  const digestData = await digestRes.json();
+  const digest = digestData.d.GetContextWebInformation.FormDigestValue;
+
+  const res = await fetch(`${SP.site}/_api/web/lists(guid'${listId}')/items`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json;odata=verbose',
+      'Content-Type': 'application/json;odata=verbose',
+      'X-RequestDigest': digest
+    },
+    credentials: 'include',
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error?.message?.value || `SP POST failed: ${res.status}`);
+  }
+  return await res.json();
+}
+
+async function spPatch(listId, itemId, body) {
+  const digestRes = await fetch(`${SP.site}/_api/contextinfo`, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json;odata=verbose' },
+    credentials: 'include'
+  });
+  const digestData = await digestRes.json();
+  const digest = digestData.d.GetContextWebInformation.FormDigestValue;
+
+  const res = await fetch(`${SP.site}/_api/web/lists(guid'${listId}')/items(${itemId})`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json;odata=verbose',
+      'Content-Type': 'application/json;odata=verbose',
+      'X-RequestDigest': digest,
+      'X-HTTP-Method': 'MERGE',
+      'IF-MATCH': '*'
+    },
+    credentials: 'include',
+    body: JSON.stringify(body)
+  });
+  if (!res.ok && res.status !== 204) throw new Error(`SP PATCH failed: ${res.status}`);
+}
+
+// ─────────────────────────────────────────
+// App state
+// ─────────────────────────────────────────
+let allTickets = [], allClients = [], allTime = [], allInvoices = [], allContracts = [];
+let currentView = 'dashboard';
+let editingTicketId = null;
+
+// Timer state
+let timerInterval = null;
+let timerSeconds = 0;
+let timerRunning = false;
+let timerTicket = null;
+let timerPaused = false;
+
+// ─────────────────────────────────────────
+// Navigation
+// ─────────────────────────────────────────
+const viewTitles = {
+  dashboard: 'Dashboard',
+  tickets: 'Tickets',
+  clients: 'Clients',
+  time: 'Time Entries',
+  invoices: 'Invoices',
+  contracts: 'Contracts'
+};
+
+const viewActions = {
+  dashboard: `<button class="btn btn-blue" onclick="openNewTicket()">+ New Ticket</button>`,
+  tickets: `<button class="btn btn-blue" onclick="openNewTicket()">+ New Ticket</button>`,
+  clients: `<button class="btn btn-blue" onclick="openNewClient()">+ New Client</button>`,
+  time: `<button class="btn btn-blue" onclick="openNewTimeEntry()">+ Log Time</button>`,
+  invoices: `<button class="btn btn-blue" onclick="openNewInvoice()">+ New Invoice</button>`,
+  contracts: `<button class="btn btn-secondary" onclick="showView('contracts')">↻ Refresh</button>`,
+};
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(`view-${name}`).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.textContent.trim().toLowerCase().includes(name.replace('-', ' '))) n.classList.add('active');
+  });
+  document.getElementById('page-title').textContent = viewTitles[name] || name;
+  document.getElementById('topbar-actions').innerHTML = viewActions[name] || '';
+  currentView = name;
+  loadView(name);
+}
+
+async function loadView(name) {
+  try {
+    if (name === 'dashboard') await loadDashboard();
+    else if (name === 'tickets') await loadTickets();
+    else if (name === 'clients') await loadClients();
+    else if (name === 'time') await loadTime();
+    else if (name === 'invoices') await loadInvoices();
+    else if (name === 'contracts') await loadContracts();
+    setConnected(true);
+  } catch(e) {
+    setConnected(false);
+    console.error(e);
+  }
+}
+
+// ─────────────────────────────────────────
+// Dashboard
+// ─────────────────────────────────────────
+async function loadDashboard() {
+  const [tickets, clients, time] = await Promise.all([
+    spGet(SP.lists.tickets, '?$orderby=Created desc&$top=50'),
+    spGet(SP.lists.clients, '?$top=100'),
+    spGet(SP.lists.timeEntries, '?$top=200')
+  ]);
+  allTickets = tickets;
+  allClients = clients;
+  allTime = time;
+
+  const open = tickets.filter(t => !['Resolved','Closed'].includes(t.Status));
+  const urgent = tickets.filter(t => t.Priority === 'Urgent' && !['Resolved','Closed'].includes(t.Status));
+  const now = new Date();
+  const thisMonth = time.filter(t => {
+    const d = new Date(t.WorkDate || t.Created);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
+  const totalHours = thisMonth.reduce((s, t) => s + (parseFloat(t.HoursSpent) || 0), 0);
+
+  document.getElementById('stat-open').textContent = open.length;
+  document.getElementById('stat-urgent').textContent = urgent.length;
+  document.getElementById('stat-clients').textContent = clients.length;
+  document.getElementById('stat-hours').textContent = totalHours.toFixed(1) + 'h';
+
+  // Recent tickets table
+  const recent = tickets.slice(0, 8);
+  document.getElementById('dashboard-tickets').innerHTML = recent.length ? `
+    <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Ref</th><th>Client</th><th>Category</th><th>Priority</th><th>Status</th>
+      </tr></thead>
+      <tbody>
+        ${recent.map(t => `
+          <tr onclick="openEditTicket(${t.Id})">
+            <td><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--ink-3)">${t.TicketReference || t.TicketRef || '—'}</span></td>
+            <td><strong>${esc(t.ClientName || t.Title || '—')}</strong></td>
+            <td>${esc(t.Category || '—')}</td>
+            <td>${priorityBadge(t.Priority)}</td>
+            <td>${statusBadge(t.Status)}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+    </div>` : `<div class="empty"><div class="empty-icon">🎫</div><div class="empty-text">No tickets yet</div><div class="empty-sub">Create your first ticket above</div></div>`;
+}
+
+// ─────────────────────────────────────────
+// Tickets
+// ─────────────────────────────────────────
+let ticketFilter = { search: '', status: '', priority: '' };
+
+async function loadTickets() {
+  document.getElementById('tickets-table').innerHTML = `<div class="loading"><div class="spinner"></div> Loading…</div>`;
+  allTickets = await spGet(SP.lists.tickets, '?$orderby=Created desc&$top=200');
+  renderTickets();
+}
+
+function renderTickets() {
+  let data = allTickets;
+  if (ticketFilter.search) {
+    const q = ticketFilter.search.toLowerCase();
+    data = data.filter(t =>
+      (t.ClientName||'').toLowerCase().includes(q) ||
+      (t.Title||'').toLowerCase().includes(q) ||
+      (t.TicketReference||t.TicketRef||'').toLowerCase().includes(q) ||
+      (t.Description||'').toLowerCase().includes(q)
+    );
+  }
+  if (ticketFilter.status) data = data.filter(t => t.Status === ticketFilter.status);
+  if (ticketFilter.priority) data = data.filter(t => t.Priority === ticketFilter.priority);
+
+  document.getElementById('tickets-table').innerHTML = data.length ? `
+    <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Ref</th><th>Client</th><th>Category</th><th>Device</th><th>Priority</th><th>Status</th><th>Hours</th>
+      </tr></thead>
+      <tbody>
+        ${data.map(t => `
+          <tr onclick="openEditTicket(${t.Id})">
+            <td><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-3)">${esc(t.TicketReference || t.TicketRef || '—')}</span></td>
+            <td><strong>${esc(t.ClientName || t.Title || '—')}</strong></td>
+            <td>${esc(t.Category || '—')}</td>
+            <td style="color:var(--ink-3)">${esc(t.Device || '—')}</td>
+            <td>${priorityBadge(t.Priority)}</td>
+            <td>${statusBadge(t.Status)}</td>
+            <td style="color:var(--ink-3)">${t.HoursSpent || '—'}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+    </div>` :
+    `<div class="empty"><div class="empty-icon">🎫</div><div class="empty-text">No tickets found</div></div>`;
+}
+
+function filterTickets(q) { ticketFilter.search = q; renderTickets(); }
+function filterTicketStatus(s) { ticketFilter.status = s; renderTickets(); }
+function filterTicketPriority(p) { ticketFilter.priority = p; renderTickets(); }
+
+// ─────────────────────────────────────────
+// Clients
+// ─────────────────────────────────────────
+async function loadClients() {
+  document.getElementById('clients-table').innerHTML = `<div class="loading"><div class="spinner"></div> Loading…</div>`;
+  allClients = await spGet(SP.lists.clients, '?$orderby=Created desc&$top=200');
+  renderClients();
+}
+
+function renderClients(q = '') {
+  let data = q ? allClients.filter(c =>
+    (c.CompanyName||c.Title||'').toLowerCase().includes(q.toLowerCase()) ||
+    (c.ContactName||'').toLowerCase().includes(q.toLowerCase())
+  ) : allClients;
+
+  document.getElementById('clients-table').innerHTML = data.length ? `
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Company</th><th>Contact</th><th>Email</th><th>Phone</th><th>Rate/hr</th></tr></thead>
+      <tbody>
+        ${data.map(c => `
+          <tr>
+            <td><strong>${esc(c.CompanyName || c.Title || '—')}</strong></td>
+            <td>${esc(c.ContactName || '—')}</td>
+            <td style="color:var(--blue)">${esc(c.Email || '—')}</td>
+            <td style="color:var(--ink-3)">${esc(c.Phone || '—')}</td>
+            <td><strong>$${c.HourlyRate || '—'}</strong></td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+    </div>` :
+    `<div class="empty"><div class="empty-icon">🏢</div><div class="empty-text">No clients yet</div></div>`;
+}
+
+function filterClients(q) { renderClients(q); }
+
+// ─────────────────────────────────────────
+// Time Entries
+// ─────────────────────────────────────────
+async function loadTime() {
+  document.getElementById('time-table').innerHTML = `<div class="loading"><div class="spinner"></div> Loading…</div>`;
+  allTime = await spGet(SP.lists.timeEntries, '?$orderby=Created desc&$top=200');
+
+  document.getElementById('time-table').innerHTML = allTime.length ? `
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Date</th><th>Ticket</th><th>Client</th><th>Hours</th><th>Rate</th><th>Total</th><th>Billable</th><th>Notes</th></tr></thead>
+      <tbody>
+        ${allTime.map(t => {
+          const hrs = parseFloat(t.HoursSpent) || 0;
+          const rate = parseFloat(t.HourlyRate) || 0;
+          const total = (hrs * rate).toFixed(2);
+          const date = t.WorkDate ? new Date(t.WorkDate).toLocaleDateString() : '—';
+          return `<tr>
+            <td style="color:var(--ink-3);white-space:nowrap">${date}</td>
+            <td><span style="font-family:'DM Mono',monospace;font-size:11px">${esc(t.TicketRef||'—')}</span></td>
+            <td><strong>${esc(t.ClientName||'—')}</strong></td>
+            <td><strong>${hrs}h</strong></td>
+            <td style="color:var(--ink-3)">$${rate}/hr</td>
+            <td><strong style="color:var(--green)">$${total}</strong></td>
+            <td>${t.Billable ? '<span class="badge badge-active">Yes</span>' : '<span class="badge badge-closed">No</span>'}</td>
+            <td style="color:var(--ink-3);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t.Description||'—')}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+    </div>` :
+    `<div class="empty"><div class="empty-icon">⏱</div><div class="empty-text">No time entries yet</div></div>`;
+}
+
+// ─────────────────────────────────────────
+// Invoices
+// ─────────────────────────────────────────
+async function loadInvoices() {
+  document.getElementById('invoices-table').innerHTML = `<div class="loading"><div class="spinner"></div> Loading…</div>`;
+  allInvoices = await spGet(SP.lists.invoices, '?$orderby=Created desc&$top=200');
+
+  document.getElementById('invoices-table').innerHTML = allInvoices.length ? `
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Invoice #</th><th>Client</th><th>Date</th><th>Due</th><th>Amount</th><th>Status</th></tr></thead>
+      <tbody>
+        ${allInvoices.map(i => `
+          <tr>
+            <td><span style="font-family:'DM Mono',monospace;font-size:12px">${esc(i.InvoiceNumber||'—')}</span></td>
+            <td><strong>${esc(i.ClientName||'—')}</strong></td>
+            <td style="color:var(--ink-3)">${i.InvoiceDate ? new Date(i.InvoiceDate).toLocaleDateString() : '—'}</td>
+            <td style="color:var(--ink-3)">${i.DueDate ? new Date(i.DueDate).toLocaleDateString() : '—'}</td>
+            <td><strong>$${parseFloat(i.TotalAmount||0).toFixed(2)}</strong></td>
+            <td>${invoiceStatusBadge(i.Status)}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+    </div>` :
+    `<div class="empty"><div class="empty-icon">📄</div><div class="empty-text">No invoices yet</div></div>`;
+}
+
+// ─────────────────────────────────────────
+// Contracts
+// ─────────────────────────────────────────
+async function loadContracts() {
+  document.getElementById('contracts-table').innerHTML = `<div class="loading"><div class="spinner"></div> Loading…</div>`;
+  allContracts = await spGet(SP.lists.contracts, '?$orderby=Created desc&$top=200');
+
+  document.getElementById('contracts-table').innerHTML = allContracts.length ? `
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Client</th><th>Type</th><th>Monthly Hours</th><th>Used</th><th>Monthly Cost</th><th>Expires</th><th>Status</th></tr></thead>
+      <tbody>
+        ${allContracts.map(c => {
+          const pct = c.MonthlyHours ? Math.round((c.HoursUsed||0)/c.MonthlyHours*100) : 0;
+          return `<tr>
+            <td><strong>${esc(c.ClientName||'—')}</strong></td>
+            <td>${esc(c.ContractType||'—')}</td>
+            <td>${c.MonthlyHours||'—'}h</td>
+            <td>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="width:60px;height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden">
+                  <div style="width:${Math.min(pct,100)}%;height:100%;background:${pct>90?'var(--red)':pct>70?'var(--amber)':'var(--green)'}"></div>
+                </div>
+                <span style="font-size:12px;color:var(--ink-3)">${c.HoursUsed||0}h</span>
+              </div>
+            </td>
+            <td><strong>$${parseFloat(c.MonthlyCost||0).toFixed(2)}</strong></td>
+            <td style="color:var(--ink-3)">${c.EndDate ? new Date(c.EndDate).toLocaleDateString() : '—'}</td>
+            <td>${contractStatusBadge(c.Status)}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+    </div>` :
+    `<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">No contracts yet</div></div>`;
+}
+
+// ─────────────────────────────────────────
+// Save functions
+// ─────────────────────────────────────────
+async function saveTicket() {
+  const btn = document.getElementById('save-ticket-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+  try {
+    const body = {
+      '__metadata': { 'type': 'SP.Data.TicketsListItem' },
+      'Title': document.getElementById('f-clientname').value || 'Ticket',
+      'TicketReference': document.getElementById('f-ticketref').value,
+      'ClientName': document.getElementById('f-clientname').value,
+      'ClientEmail': document.getElementById('f-email').value,
+      'ContactPhone': document.getElementById('f-phone').value,
+      'Device': document.getElementById('f-device').value,
+      'Category': document.getElementById('f-category').value,
+      'Priority': document.getElementById('f-priority').value,
+      'Status': document.getElementById('f-status').value,
+      'Description': document.getElementById('f-description').value,
+      'Resolution': document.getElementById('f-resolution').value,
+      'HoursSpent': parseFloat(document.getElementById('f-hours').value) || 0,
+    };
+    if (editingTicketId) {
+      await spPatch(SP.lists.tickets, editingTicketId, body);
+      toast('Ticket updated', 'success');
+    } else {
+      if (!body.TicketReference) body.TicketReference = generateRef();
+      await spPost(SP.lists.tickets, body);
+      toast('Ticket created', 'success');
+    }
+    closeAllModals();
+    loadView(currentView);
+  } catch(e) {
+    toast('Error: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Save Ticket';
+  }
+}
+
+async function saveClient() {
+  try {
+    await spPost(SP.lists.clients, {
+      '__metadata': { 'type': 'SP.Data.ClientsListItem' },
+      'Title': document.getElementById('fc-company').value,
+      'CompanyName': document.getElementById('fc-company').value,
+      'ContactName': document.getElementById('fc-contact').value,
+      'Email': document.getElementById('fc-email').value,
+      'Phone': document.getElementById('fc-phone').value,
+      'HourlyRate': parseFloat(document.getElementById('fc-rate').value) || 0,
+      'Address': document.getElementById('fc-address').value,
+      'Notes': document.getElementById('fc-notes').value,
+    });
+    toast('Client saved', 'success');
+    closeAllModals();
+    loadView(currentView);
+  } catch(e) { toast('Error: ' + e.message, 'error'); }
+}
+
+async function saveTimeEntry() {
+  try {
+    await spPost(SP.lists.timeEntries, {
+      '__metadata': { 'type': 'SP.Data.Time_x0020_EntriesListItem' },
+      'Title': document.getElementById('ft-client').value || 'Time Entry',
+      'TicketRef': document.getElementById('ft-ticketref').value,
+      'ClientName': document.getElementById('ft-client').value,
+      'WorkDate': document.getElementById('ft-date').value || new Date().toISOString(),
+      'HoursSpent': parseFloat(document.getElementById('ft-hours').value) || 0,
+      'HourlyRate': parseFloat(document.getElementById('ft-rate').value) || 0,
+      'Billable': document.getElementById('ft-billable').value === 'true',
+      'Description': document.getElementById('ft-desc').value,
+    });
+    toast('Time logged', 'success');
+    closeAllModals();
+    loadView(currentView);
+  } catch(e) { toast('Error: ' + e.message, 'error'); }
+}
+
+async function saveInvoice() {
+  try {
+    await spPost(SP.lists.invoices, {
+      '__metadata': { 'type': 'SP.Data.InvoicesListItem' },
+      'Title': document.getElementById('fi-client').value,
+      'InvoiceNumber': document.getElementById('fi-num').value,
+      'ClientName': document.getElementById('fi-client').value,
+      'InvoiceDate': document.getElementById('fi-date').value || new Date().toISOString(),
+      'DueDate': document.getElementById('fi-due').value || null,
+      'TotalAmount': parseFloat(document.getElementById('fi-amount').value) || 0,
+      'Status': document.getElementById('fi-status').value,
+      'Notes': document.getElementById('fi-notes').value,
+    });
+    toast('Invoice created', 'success');
+    closeAllModals();
+    loadView(currentView);
+  } catch(e) { toast('Error: ' + e.message, 'error'); }
+}
+
+// ─────────────────────────────────────────
+// Modal helpers
+// ─────────────────────────────────────────
+function openNewTicket() {
+  editingTicketId = null;
+  document.getElementById('modal-ticket-title').textContent = 'New Ticket';
+  document.getElementById('f-ticketref').value = generateRef();
+  ['f-clientname','f-email','f-phone','f-device','f-description','f-resolution'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-category').value = '';
+  document.getElementById('f-priority').value = 'Medium';
+  document.getElementById('f-status').value = 'New';
+  document.getElementById('f-hours').value = '';
+  showModal('modal-ticket');
+}
+
+function openEditTicket(id) {
+  const t = allTickets.find(x => x.Id === id);
+  if (!t) return;
+  editingTicketId = id;
+  document.getElementById('modal-ticket-title').textContent = 'Edit Ticket';
+  document.getElementById('f-ticketref').value = t.TicketReference || t.TicketRef || '';
+  document.getElementById('f-clientname').value = t.ClientName || t.Title || '';
+  document.getElementById('f-email').value = t.ClientEmail || t.ContactEmail || '';
+  document.getElementById('f-phone').value = t.ContactPhone || '';
+  document.getElementById('f-device').value = t.Device || '';
+  document.getElementById('f-category').value = t.Category || '';
+  document.getElementById('f-priority').value = t.Priority || 'Medium';
+  document.getElementById('f-status').value = t.Status || 'New';
+  document.getElementById('f-description').value = t.Description || '';
+  document.getElementById('f-resolution').value = t.Resolution || '';
+  document.getElementById('f-hours').value = t.HoursSpent || '';
+  showModal('modal-ticket');
+}
+
+function openNewClient() {
+  ['fc-company','fc-contact','fc-email','fc-phone','fc-rate','fc-address','fc-notes'].forEach(id => document.getElementById(id).value = '');
+  showModal('modal-client');
+}
+
+function openNewTimeEntry() {
+  document.getElementById('ft-date').value = new Date().toISOString().split('T')[0];
+  ['ft-ticketref','ft-client','ft-hours','ft-rate','ft-desc'].forEach(id => document.getElementById(id).value = '');
+  showModal('modal-time');
+}
+
+function openNewInvoice() {
+  document.getElementById('fi-date').value = new Date().toISOString().split('T')[0];
+  const due = new Date(); due.setDate(due.getDate() + 30);
+  document.getElementById('fi-due').value = due.toISOString().split('T')[0];
+  document.getElementById('fi-num').value = 'INV-' + String(allInvoices.length + 1).padStart(3, '0');
+  ['fi-client','fi-amount','fi-notes'].forEach(id => document.getElementById(id).value = '');
+  showModal('modal-invoice');
+}
+
+function showModal(id) {
+  document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+  document.getElementById('modal-backdrop').classList.add('open');
+}
+
+function closeAllModals() {
+  document.getElementById('modal-backdrop').classList.remove('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-backdrop')) closeAllModals();
+}
+
+// ─────────────────────────────────────────
+// Timer
+// ─────────────────────────────────────────
+function startTimer() {
+  if (timerRunning) return;
+  const ticket = prompt('Ticket reference (optional):');
+  timerTicket = ticket || null;
+  document.getElementById('timer-ticket-label').textContent = timerTicket ? `🎫 ${timerTicket}` : 'Running…';
+  timerRunning = true;
+  timerPaused = false;
+  document.getElementById('timer-start-btn').style.display = 'none';
+  document.getElementById('timer-stop-btn').style.display = '';
+  document.getElementById('timer-pause-btn').style.display = '';
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function pauseTimer() {
+  if (timerPaused) {
+    timerInterval = setInterval(() => { timerSeconds++; updateTimerDisplay(); }, 1000);
+    timerPaused = false;
+    document.getElementById('timer-pause-btn').textContent = '⏸';
+  } else {
+    clearInterval(timerInterval);
+    timerPaused = true;
+    document.getElementById('timer-pause-btn').textContent = '▶';
+  }
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  const hrs = (timerSeconds / 3600).toFixed(2);
+
+  // Pre-fill time entry modal
+  document.getElementById('ft-hours').value = hrs;
+  document.getElementById('ft-ticketref').value = timerTicket || '';
+  document.getElementById('ft-date').value = new Date().toISOString().split('T')[0];
+  ['ft-client','ft-rate','ft-desc'].forEach(id => document.getElementById(id).value = '');
+
+  // Reset timer
+  timerSeconds = 0;
+  timerPaused = false;
+  updateTimerDisplay();
+  document.getElementById('timer-start-btn').style.display = '';
+  document.getElementById('timer-stop-btn').style.display = 'none';
+  document.getElementById('timer-pause-btn').style.display = 'none';
+  document.getElementById('timer-ticket-label').textContent = 'No ticket selected';
+
+  showModal('modal-time');
+  toast(`Timer stopped — ${hrs}h logged`, 'success');
+}
+
+function updateTimerDisplay() {
+  const h = Math.floor(timerSeconds / 3600);
+  const m = Math.floor((timerSeconds % 3600) / 60);
+  const s = timerSeconds % 60;
+  document.getElementById('timer-display').textContent =
+    `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+// ─────────────────────────────────────────
+// Helpers
+// ─────────────────────────────────────────
+function generateRef() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const d = String(now.getDate()).padStart(2,'0');
+  const r = Math.random().toString(36).substring(2,6).toUpperCase();
+  return `CR-${y}${m}${d}-${r}`;
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function statusBadge(s) {
+  const map = {
+    'New': 'badge-new',
+    'In Progress': 'badge-progress',
+    'Waiting on Client': 'badge-waiting',
+    'Resolved': 'badge-resolved',
+    'Closed': 'badge-closed',
+  };
+  return `<span class="badge ${map[s]||'badge-closed'}">${esc(s||'—')}</span>`;
+}
+
+function priorityBadge(p) {
+  const map = { 'Urgent': 'badge-urgent', 'Medium': 'badge-medium', 'Low': 'badge-low' };
+  return `<span class="badge ${map[p]||'badge-low'}">${esc(p||'—')}</span>`;
+}
+
+function invoiceStatusBadge(s) {
+  const map = { 'Paid': 'badge-paid', 'Sent': 'badge-sent', 'Draft': 'badge-draft', 'Overdue': 'badge-overdue' };
+  return `<span class="badge ${map[s]||'badge-draft'}">${esc(s||'—')}</span>`;
+}
+
+function contractStatusBadge(s) {
+  const map = { 'Active': 'badge-active', 'Expired': 'badge-expired', 'Pending': 'badge-pending' };
+  return `<span class="badge ${map[s]||'badge-draft'}">${esc(s||'—')}</span>`;
+}
+
+function toast(msg, type = '') {
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span> ${msg}`;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+function setConnected(ok) {
+  document.getElementById('conn-dot').className = 'conn-dot' + (ok ? '' : ' offline');
+  document.getElementById('conn-status').textContent = ok ? 'Connected' : 'Offline';
+}
+
+// ─────────────────────────────────────────
+// Password protection
+// ─────────────────────────────────────────
+const PORTAL_PASSWORD = 'CRportal!';
+const SESSION_KEY = 'cr_portal_auth';
+
+function checkAuth() {
+  if (sessionStorage.getItem(SESSION_KEY) === 'true') {
+    initPortal();
+  } else {
+    showLoginScreen();
+  }
+}
+
+function showLoginScreen() {
+  document.body.innerHTML = `
+    <div style="
+      position:fixed;inset:0;
+      background:linear-gradient(135deg,#0a1f3d 0%,#0d2748 100%);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'DM Sans',sans-serif;
+    ">
+      <div style="text-align:center;width:320px;">
+        <div style="margin-bottom:24px;">
+          <img src="https://villae25.github.io/CloudRoot-IT-App/logo-header.png"
+               style="height:64px;filter:brightness(0) invert(1);opacity:0.9;" alt="CloudRoot IT"/>
+        </div>
+        <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:white;letter-spacing:-0.02em;margin-bottom:4px;">
+          CloudRoot <span style="color:#1e88ff;">IT</span>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:32px;">
+          Tech Portal
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:28px;">
+          <input id="portal-pw" type="password" placeholder="Enter password"
+            style="
+              width:100%;padding:12px 16px;
+              background:rgba(255,255,255,0.08);
+              border:1px solid rgba(255,255,255,0.15);
+              border-radius:10px;
+              color:white;font-size:15px;
+              font-family:'DM Sans',sans-serif;
+              margin-bottom:12px;
+              outline:none;
+            "
+            onkeydown="if(event.key==='Enter')tryLogin()"
+          />
+          <div id="pw-error" style="color:#f87171;font-size:12px;margin-bottom:12px;display:none;">
+            Incorrect password. Try again.
+          </div>
+          <button onclick="tryLogin()" style="
+            width:100%;padding:12px;
+            background:#1e88ff;color:white;
+            border:none;border-radius:10px;
+            font-family:'DM Sans',sans-serif;
+            font-size:14px;font-weight:600;
+            cursor:pointer;
+          ">Sign in</button>
+        </div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.2);margin-top:20px;">
+          CloudRoot IT · Internal use only
+        </div>
+      </div>
+    </div>
+  `;
+  setTimeout(() => document.getElementById('portal-pw')?.focus(), 100);
+}
+
+function tryLogin() {
+  const pw = document.getElementById('portal-pw').value;
+  if (pw === PORTAL_PASSWORD) {
+    sessionStorage.setItem(SESSION_KEY, 'true');
+    location.reload();
+  } else {
+    document.getElementById('pw-error').style.display = 'block';
+    document.getElementById('portal-pw').value = '';
+    document.getElementById('portal-pw').focus();
+  }
+}
+
+function initPortal() {
+  loadDashboard().catch(e => {
+    setConnected(false);
+    console.warn('Initial load failed — are you logged into SharePoint?', e);
+  });
+}
+
+// ─────────────────────────────────────────
+// Init
+// ─────────────────────────────────────────
+checkAuth();
+</script>
+</body>
+</html>
