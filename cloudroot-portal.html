@@ -1142,6 +1142,23 @@ const SP = {
   }
 };
 
+// Power Automate flow URLs
+const FLOWS = {
+  getTickets: 'https://defaultd285988d8b7848e6a0bed96df6b8b6.1d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/f21e65e842c14a0f8ef118be61879e94/triggers/manual/paths/invoke?api-version=1',
+};
+
+async function fetchTicketsViaFlow() {
+  const res = await fetch(FLOWS.getTickets, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({})
+  });
+  if (!res.ok) throw new Error('Flow failed: ' + res.status);
+  const data = await res.json();
+  return data.value || data.body?.value || [];
+}
+
 // ─────────────────────────────────────────
 // SP API helpers
 // ─────────────────────────────────────────
@@ -1274,11 +1291,19 @@ async function loadView(name) {
 // Dashboard
 // ─────────────────────────────────────────
 async function loadDashboard() {
-  const [tickets, clients, time] = await Promise.all([
-    spGet(SP.lists.tickets, '?$orderby=Created desc&$top=50'),
+  // Try Power Automate flow for tickets, fall back to direct SP call
+  let ticketData;
+  try {
+    ticketData = await fetchTicketsViaFlow();
+  } catch(e) {
+    console.log('Flow unavailable, falling back to direct SP:', e.message);
+    ticketData = await spGet(SP.lists.tickets, '?$orderby=Created desc&$top=50');
+  }
+  const [clients, time] = await Promise.all([
     spGet(SP.lists.clients, '?$top=100'),
     spGet(SP.lists.timeEntries, '?$top=200')
   ]);
+  const tickets = ticketData;
   allTickets = tickets;
   allClients = clients;
   allTime = time;
@@ -1326,7 +1351,12 @@ let ticketFilter = { search: '', status: '', priority: '' };
 
 async function loadTickets() {
   document.getElementById('tickets-table').innerHTML = `<div class="loading"><div class="spinner"></div> Loading…</div>`;
-  allTickets = await spGet(SP.lists.tickets, '?$orderby=Created desc&$top=200');
+  try {
+    allTickets = await fetchTicketsViaFlow();
+  } catch(e) {
+    console.log('Flow unavailable, falling back to direct SP:', e.message);
+    allTickets = await spGet(SP.lists.tickets, '?$orderby=Created desc&$top=200');
+  }
   renderTickets();
 }
 
